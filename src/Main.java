@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -7,28 +9,66 @@ public class Main {
         PM pm = new PM();
         LinkedList<Integer> output = new LinkedList<Integer>();
         String[] init = new String[2];
+        String input = null;
+        String choice;
+        File outputFile = null;
+        ReadWrite rw = new ReadWrite();
         Scanner sc = new Scanner(System.in);
-        for (int i = 0; i < 2; i++) {
-            init[i] = sc.nextLine();
+        choice = sc.nextLine();
+        if ("1".equals(choice)) {
+            for (int i = 0; i < 2; i++) {
+                init[i] = sc.nextLine();
+                input = sc.nextLine();
+            }
+        } else if ("2".equals(choice)) {
+            String fileName = sc.nextLine();
+            File cwd = new File("data");
+            File initFile = new File(cwd.getAbsolutePath() + "/" + fileName + ".txt");
+            try {
+                LinkedList<String> initList = rw.readFile(initFile);
+                // convert linkList to String array
+                init = initList.toArray(new String[0]);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            fileName = sc.nextLine();
+            File inputFile = new File(cwd.getAbsolutePath() + "/" + fileName + ".txt");
+            try {
+                LinkedList<String> inputList = rw.readFile(inputFile);
+                input = inputList.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            outputFile = new File(cwd.getAbsolutePath() + "/output.txt");
         }
         pm.initialize(init[0], init[1]);
-        String temp = sc.nextLine();
-        int[] va = Arrays.stream(temp.split(" ")).mapToInt(Integer::parseInt).toArray();
-        for (int i = 0; i < va.length; i ++) {
-            int s = Translation.getS(va[i]);
-            int p = Translation.getP(va[i]);
-            int w = Translation.getW(va[i]);
-            int pw = Translation.getPw(va[i]);
-            if (pw >= pm.getBoundary(s)){
+        int[] va = Arrays.stream(input.split(" ")).mapToInt(Integer::parseInt).toArray();
+        for (int j : va) {
+            int s = Translation.getS(j);
+            int p = Translation.getP(j);
+            int w = Translation.getW(j);
+            int pw = Translation.getPw(j);
+            if (pw >= pm.getBoundary(s)) {
                 output.add(-1);
-            }else {
+            } else {
                 //store outputs in list then print in one line.
                 output.add(pm.getValue(s, p, w));
             }
         }
-        for (int pa:output) {
+        for (int pa : output) {
             System.out.print(pa + " ");
         }
+        if (outputFile != null) {
+            try {
+                rw.writeFile(outputFile, output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         sc.close();
+
     }
+
 }
