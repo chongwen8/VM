@@ -16,7 +16,9 @@ If wanting to use a file as input, just input 1 at the beginning and then input 
 Exg:
 
 ```bash
-auto file.txt
+init-dp
+input-dp
+
 ```
 
 then the output will be recorded as a txt file named output-dp.txt located in the data directory（VM/out/production/VM）.
