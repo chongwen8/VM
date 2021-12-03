@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 /***
  * This class is extension class
@@ -22,8 +23,16 @@ public class ReadWrite{
     void writeFile(File outputFile, LinkedList<Integer> outputList) throws IOException {
         FileWriter writer = new FileWriter(outputFile);
         BufferedWriter bufferedWriter = new BufferedWriter(writer);
-        String output = outputFile.toString();
-            bufferedWriter.write(output);
+        StringBuilder output = new StringBuilder();
+        ListIterator<Integer> listIterator = outputList.listIterator();
+
+        while (listIterator.hasNext()) {
+
+            // using append method for appending string
+            output.append(listIterator.next())
+                    .append(" ");
+        }
+            bufferedWriter.write(output.toString() + "\n");
             bufferedWriter.close();
         }
     }

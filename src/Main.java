@@ -16,11 +16,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         choice = sc.nextLine();
         if ("1".equals(choice)) {
-            for (int i = 0; i < 2; i++) {
-                init[i] = sc.nextLine();
-                input = sc.nextLine();
-            }
-        } else if ("2".equals(choice)) {
             String fileName = sc.nextLine();
             File cwd = new File("data");
             File initFile = new File(cwd.getAbsolutePath() + "/" + fileName + ".txt");
@@ -36,11 +31,16 @@ public class Main {
             File inputFile = new File(cwd.getAbsolutePath() + "/" + fileName + ".txt");
             try {
                 LinkedList<String> inputList = rw.readFile(inputFile);
-                input = inputList.toString();
+                input = inputList.getFirst();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            outputFile = new File(cwd.getAbsolutePath() + "/output.txt");
+            outputFile = new File(cwd.getAbsolutePath() + "/output-dp.txt");
+        }else{
+            for (int i = 0; i < 2; i++) {
+                init[i] = sc.nextLine();
+            }
+                input = sc.nextLine();
         }
         pm.initialize(init[0], init[1]);
         int[] va = Arrays.stream(input.split(" ")).mapToInt(Integer::parseInt).toArray();
