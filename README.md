@@ -13,7 +13,7 @@ then you can input init and input. The result will show in the terminal.
 
 If wanting to use a file as input, just input 1 at the beginning and then input init-dp and input-dp one by one.
 
-Exg:
+e.g.
 
 ```bash
 init-dp
